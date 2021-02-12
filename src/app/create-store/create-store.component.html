@@ -1,0 +1,63 @@
+<div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button #boxDialog type="button" class="btn-close btn-primary btn-close-light" (click)="closeModalBox()" data-dismiss="modal" aria-label="Close"><i class="bi bi-arrow-left-circle"></i></button>
+        <h5 class="modal-title ml-2" id="exampleModalLabel">Add New store</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createStoreForm" (ngSubmit)="createStore()">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3">
+              <label for="store-name" class="col-form-label">store Name:</label>
+              <input type="text" formControlName="storeName" name="storeName" class="form-control form-control-sm" id="store-name" />
+              <div class="invalid-feedback" *ngIf="storeName.touched && storeName.errors && storeName.errors.required">
+                Required
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12 mb-3">
+              <label for="owner-name" class="col-form-label">Owner Name:</label>
+              <input type="text" formControlName="ownerName" name="ownerName" class="form-control form-control-sm" id="owner-name" />
+              <div class="invalid-feedback" *ngIf="ownerName.touched && ownerName.errors && ownerName.errors.required">
+                Required
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12 mb-3">
+              <label for="category" class="col-form-label">Category:</label>
+              <select formControlName="category" name="category" class="form-control form-control-sm" id="category">
+                <option value="GENERALSTORE">General store</option>
+                <option value="MALL">Mall</option>
+                <option value="SUPERMARKET">Supermarket</option>
+                <option value="MEDICALSTORE">Medical store</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="category.touched && category.errors && category.errors.required">
+                Required
+              </div>
+            </div>
+
+          </div>
+          <div class="mb-3">
+            <label for="address" class="col-form-label">Address/location :</label>
+            <input type="text" (keyup)="getlocationListArray($event)" formControlName="address" name="address" class="form-control form-control-sm" id="address" />
+
+            <ul class="list-group " *ngIf="addressData.length > 0">
+              <li class="list-group-item" (click)="selectAddress(addressData)">{{addressData}}</li>
+            </ul>
+
+            <div class="invalid-feedback" *ngIf="address.touched && address.errors && address.errors.required">
+              Required
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="!createStoreForm.valid" class="btn btn-primary float-right">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position: absolute; top: 9px; right: 14px;" *ngIf="isToast">
+<app-toaster [message]="message" [success]="success" (isToast)="closeToast()"></app-toaster>
+</div>

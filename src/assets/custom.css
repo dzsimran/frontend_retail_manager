@@ -1,0 +1,70 @@
+.v-align-text-bottom {
+  vertical-align: text-bottom;
+}
+.btn-close-light {
+  border: 0 none;
+  border-radius: 100%;
+  font-size: 24px;
+  padding: 3px;
+  line-height: 18px;
+}
+.form-control.search {
+  padding: 0.25rem 10.5rem 0.25rem 1.8rem;
+}
+.btn-search {
+  position: absolute;
+  right: 1px;
+  padding: 0.05rem 0.5rem;
+  margin-top: 0.02rem;
+  z-index: 9;
+}
+.input-group .search-icon {
+  position: absolute;
+  left: 7px;
+  top: 1px;
+  z-index: 9;
+  color: #86898a;
+}
+.toast {
+  opacity: 1 !important;
+  width: 250px;
+}
+.toast .toast-body {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+.toast .toast-body p {
+  font-size: 16px;
+}
+.f-s-22 {
+  font-size: 22px;
+}
+.w-90 {
+  width: 90%;
+}
+.nearbycheck {
+  position: absolute !important;
+  top: 4px;
+  right: 150px;
+  font-size: 14px;
+  z-index: 9;
+}
+.ic_close {
+  right: 0;
+  position: absolute;
+  z-index: 2;
+}
+.f-s-12 {font-size: 12px}
+
+.cursor-pointer {cursor: pointer;}
+.form-check-input {
+  margin-left: -1rem!important;
+}
+.modal-header{justify-content: start!important;}
+@media only screen and (max-width:767px) {
+  .nearbycheck{right: 136px;}
+  .pp-0 {padding-left: 0!important;padding-right: 0!important;}
+  .d-sm-hidden{display: none;}
+  .form-control.search {
+    padding: 0.25rem 4.5rem 0.25rem 0.5rem;
+  }
+}

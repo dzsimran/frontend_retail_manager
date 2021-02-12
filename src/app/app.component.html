@@ -1,0 +1,126 @@
+<nav class="navbar navbar-dark bg-primary justify-content-between">
+  <a class="navbar-brand">Store Manager</a>
+  <div class="form-inline">
+    <button type="button" (click)="showShopForm(true)" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#createNewstore">
+      <i class="bi bi-plus-square v-align-text-bottom"></i> Create a shop</button>
+  </div>
+</nav>
+
+<section *ngIf="!showCreateShopForm" class="mt-5">
+  <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-4 col-6 col-sm-12 order-lg-1 order-md-1 order-sm-1 pp-0">
+              List of all stores
+            </div>
+
+
+            <div class="col-md-8 col-sm-12 order-lg-2 order-md-2 order-sm-2 pp-0">
+              <form class="d-flex">
+                <i class="bi bi-info-circle-fill mr-2 cursor-pointer" data-toggle="modal" data-target="#info"></i>
+                <div class="input-group position-relative w-90">
+                  <div class="search-icon d-sm-hidden"><i class="bi bi-search"></i></div>
+                  <div style="width:100%; display: flex">
+                    <input [hidden]="isShow"  #searchUserInput type="text" (keyup)="disableButton(searchUserInput)" class="form-control form-control-sm search" id="search" placeholder="Search a  store" />
+                    <button class="btn btn-primary btn-sm ml-2" [hidden]="isNearByEnabled" [disabled]="isDisabled" (click)="searchStores(searchUserInput)">Search</button>
+                    <button class="btn btn-primary btn-sm ml-2" (click)="resetSearch(searchUserInput, $event)">Clear</button>
+                  </div>
+                  <div class="location-search-box">
+                      <input style="display: block" [hidden]="!isShow" type="text" [(ngModel)]="inputValue" [ngModelOptions]="{standalone: true}" #inputNearByValue (keyup)="searchstores($event)" class="form-control form-control-sm search" id="search" placeholder="Enter Location" />
+                      <ul  class="list-group location-list " *ngIf="addressData.length > 0 && isShow">
+                        <li class="list-group-item" (click)="selectAddress(addressData, inputNearByValue)">{{addressData}}</li>
+                      </ul>
+                    </div>
+
+
+
+
+                </div>
+              </form>
+
+              <div class="form-check nearbycheck">
+                <input class="form-check-input" #checked (change)="toggleInput($event)"  type="checkbox" value="" id="searchNearByMe">
+                <label class="form-check-label" for="searchNearByMe">
+                  Near By
+                </label>
+              </div>
+
+              </div>
+
+          </div>
+        </div>
+        <div class="card-body overflow-auto">
+          <table class="table table-striped">
+            <thead class="bg-primary text-white">
+            <tr>
+              <th scope="col">Store Name</th>
+              <th scope="col">Store Owner</th>
+              <th scope="col">Category</th>
+              <th scope="col">Location</th>
+            </tr>
+            </thead>
+              <tbody>
+                <tr *ngFor="let stores of storeListTemp">
+                  <td>{{stores.shopName}}</td>
+                  <td>{{stores.ownerName}}</td>
+                  <td>{{stores.category}}</td>
+                  <td>{{stores.address.address}}</td>
+                </tr>
+              </tbody>
+
+              <tbody *ngIf="storeListTemp.length === 0">
+              <tr>
+                <td colspan="4"><h5 class="text-center">No Shops Available.</h5></td>
+              </tr>
+              </tbody>
+          </table>
+
+          <div class="row" *ngIf="storeListTemp.length > 0">
+            <p *ngIf="totalPage" lass="mt-2 col-6">
+              Total Pages {{totalPage > 0 ? pageNumber + 1 : 0}} of {{totalPage}}
+            </p>
+            <nav class="col-6" *ngIf="!isNearByEnabled">
+              <ul class="pagination  float-right">
+                <li class="page-item" [class]="pageNumber === 0 ? 'disabled' : 'active'">
+                  <a class="page-link" href="javascript:;" (click)="previousPage()"><i class="bi bi-chevron-double-left"></i></a>
+                </li>
+                <li class="page-item" [class]="storeListTemp.length < 10 ? 'disabled' : 'active'">
+                  <a class="page-link" href="javascript:;" (click)="nextPage()"><i class="bi bi-chevron-double-right"></i></a>
+                </li>
+              </ul>
+            </nav>
+            <nav class="col-6" *ngIf="isNearByEnabled">
+              <ul class="pagination  float-right">
+                <li class="page-item" [class]="pageNumber === 0 ? 'disabled' : 'active'">
+                  <a class="page-link" href="javascript:;" (click)="previousPageForNearBy()"><i class="bi bi-chevron-double-left"></i></a>
+                </li>
+                <li class="page-item" [class]="storeListTemp.length < 10 ? 'disabled' : 'active'">
+                  <a class="page-link" href="javascript:;" (click)="nextPageForNearBy()"><i class="bi bi-chevron-double-right"></i></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="modal fade" id="info" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <button #modalClose type="button" class="btn-close btn-close-light ic_close" (click)="closeDialog()" data-dismiss="modal" aria-label="Close"><i class="bi bi-x"></i></button>
+      <div class="modal-body">
+        <p class="f-s-12">The nearby search results are within 3 km boundary.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CREATE NEW store MODAL -->
+<app-create-store *ngIf="showCreateShopForm" (createStoreDetailEmitter)="createStoreEmit($event)" (getfilteredDetailsEmitter)="getFiltered($event)" (toggleEmitter)="showShopForm($event)"></app-create-store>
