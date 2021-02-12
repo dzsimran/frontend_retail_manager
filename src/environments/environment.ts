@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8089/',
   geoAPI: 'https://maps.googleapis.com/maps/api/geocode/json',
-  geoAPIKey: 'AIzaSyBxI5zTMPawNt4Rpihxt61Ub98GnWIOB4E',
+  geoAPIKey: '',
   apiVersion: 'v1',
   baseUrl: '/'
 };
